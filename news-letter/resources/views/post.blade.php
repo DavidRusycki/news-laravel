@@ -30,25 +30,27 @@
 
     <div class="container principal">
 
-        <div class="conteudo-central">
-                <div class="card" style="width: 70rem;">
-                    <div class="card-body" >
-                        <h5 class="card-title">{{$post->tittle}}</h5>
-                        <p class="card-text"><pre>{{$post->content}}</p>
-                    </div>
-                </div>
-                <br>
-
-                @foreach ($comments as $comment)
-                    <div class="card" style="width: 70rem;">
-                        <div class="card-body" >
-                            <p class="card-text"><pre>{{$comment->content}}</p>
-                        </div>
-                    </div>
-                    <br>
-                @endforeach
-
+        <div class="card" style="width: 70rem;">
+            <div class="card-body" >
+                <h5 class="card-title">{{$post->tittle}}</h5>
+                <p class="card-text"><pre>{{$post->content}}</p>
+            </div>
         </div>
+        <br>
+
+        <div style="margin-bottom: 1em;">
+            <span> {{count($comments )}} Comentários </span>
+        </div>
+
+        @foreach ($comments as $comment)
+            <div class="card" style="width: 70rem;">
+                <div class="card-body" >
+                    <p class="card-text"><pre>{{$comment->content}}</p>
+                </div>
+            </div>
+            <br>
+        @endforeach
+
 
     </div>
 
