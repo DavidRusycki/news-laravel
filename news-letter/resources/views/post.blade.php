@@ -30,23 +30,24 @@
 
     <div class="container principal">
 
-        <div style="text-align: center; margin-bottom: 1em;">    
-            <span >
-                Número de posts: {{count($posts)}}
-            </span>    
-        </div>
-
         <div class="conteudo-central">
-            @foreach ($posts as $post)
-                <div class="card" style="width: 30rem;">
+                <div class="card" style="width: 70rem;">
                     <div class="card-body" >
                         <h5 class="card-title">{{$post->tittle}}</h5>
                         <p class="card-text"><pre>{{$post->content}}</p>
-                        <a href="{{url("/posts/{$post->id}")}}" class="btn btn-primary botaozinho">Go To</a>
                     </div>
                 </div>
                 <br>
-            @endforeach
+
+                @foreach ($comments as $comment)
+                    <div class="card" style="width: 70rem;">
+                        <div class="card-body" >
+                            <p class="card-text"><pre>{{$comment->content}}</p>
+                        </div>
+                    </div>
+                    <br>
+                @endforeach
+
         </div>
 
     </div>

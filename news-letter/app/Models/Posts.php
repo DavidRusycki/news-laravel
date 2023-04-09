@@ -15,12 +15,17 @@ class Posts extends Model
      */
     protected $primaryKey = 'id';    
 
+    public function getComments(): Array
+    {
+        return [];
+    }
+
     /**
      * pega os comentários do post
      */
     public function comments(): HasMany
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comments::class);
     }
 
 }

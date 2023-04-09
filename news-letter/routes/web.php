@@ -19,3 +19,5 @@ Route::get('/', function () {
 });
 
 Route::get('/posts', [ControllerPost::class, 'getScreenPosts']);
+
+Route::get('/posts/{id}', [ControllerPost::class, 'getPostFromId']);
