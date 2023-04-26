@@ -46,10 +46,14 @@ class ControllerPost extends Controller
     protected function newPost(Request $oRequest)
     {
         if ($this->validaDados($oRequest)) {
+            $this->trataDados($oRequest);
             $oPost = new Posts;
             $oPost->tittle = $oRequest->tittle;
             $oPost->content = $oRequest->content;
     
+            if (!$oRequest->hasFile('image')) {
+                $oPost->image = 'padrao';
+            } else 
             if ($oRequest->hasFile('image') && $oRequest->file('image')->isValid()) {
                 $sImagePath = $this->addImagePath($oRequest->image);
                 $oPost->image = $sImagePath;
@@ -87,6 +91,14 @@ class ControllerPost extends Controller
             case is_null($oRequest->content) :
                 return false;
         }
+        return true;
+    }
+
+
+    /**
+     * Trata os dados para a inclusão ou alteração
+     */
+    private function trataDados($oRequest) {
         return true;
     }
 
