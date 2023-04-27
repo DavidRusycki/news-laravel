@@ -23,3 +23,12 @@ Route::get('/post/new', [ControllerPost::class, 'createPost']);
 Route::post('/posts', [ControllerPost::class, 'newPost']);
 
 Route::delete('/posts/{id}', [ControllerPost::class, 'deletePost']);
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
