@@ -12,7 +12,7 @@ class ControllerPost extends Controller
     /**
      * Retorna a tela para exibir os posts
      */
-    public function getScreenPosts() 
+    public function getScreenPosts(Request $oRequest) 
     {
         $sSearch = request('search');
         if ($sSearch) {
@@ -21,7 +21,9 @@ class ControllerPost extends Controller
             $aPosts = Posts::all();
         }
         
-        return view('posts', ['posts' => $aPosts]);
+        $oRequest->session()->flash('flash.banner', 'Yay it works!');
+
+        return view('posts', ['posts' => $aPosts, 'id' => $oRequest->user()->id]);
     }
 
     /**
@@ -60,7 +62,7 @@ class ControllerPost extends Controller
             }
     
             $oPost->save();
-            return  redirect('/');
+            return  redirect('/posts');
         }
         return  redirect('/post/new');
     }
@@ -108,7 +110,7 @@ class ControllerPost extends Controller
     protected function deletePost($id) {
         Posts::findOrFail($id)->delete();
 
-        return redirect('/');
+        return redirect('/posts');
     }
 
 }
