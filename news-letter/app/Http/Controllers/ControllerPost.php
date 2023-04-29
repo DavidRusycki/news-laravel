@@ -113,4 +113,11 @@ class ControllerPost extends Controller
         return redirect('/posts');
     }
 
+    /**
+     * Redireciona para a home.
+     */
+    public function redirectHome() {
+        return redirect('/posts');
+    }
+
 }

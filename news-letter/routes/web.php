@@ -34,4 +34,6 @@ Route::middleware([
     
     Route::delete('/posts/{id}', [ControllerPost::class, 'deletePost']);    
 
+    Route::get('/', [ControllerPost::class, 'redirectHome']);
+
 });
