@@ -89,24 +89,44 @@
                         </div>
                         <br>
                         
-                        <form action="/comment/{{$post->id}}" method="GET">
-                            @csrf
-                            @method('GET')
-                            <textarea name="content" id="" cols="30" rows="10" required></textarea>
-                            <input type="submit" value="Comentar">
+                        <form class="w-full bg-white rounded-lg px-4 pt-2" action="/comment/{{$post->id}}" method="GET">
+                        @csrf
+                        @method('GET')
+                            <div class="flex flex-wrap -mx-3 mb-6">
+                                <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg">Adicione um novo comentário</h2>
+                                <div class="w-full md:w-full px-3 mb-2 mt-2">
+                                    <textarea name="content" placeholder='Digite o seu comentário' required class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"></textarea>
+                                </div>
+                                <div class="w-full md:w-full flex items-start md:w-full px-3">
+                                    <div class="-mr-1">
+                                    <input style="margin-bottom: 1em;" value="Comentar" type='submit' class="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100">
+                                </div>
+                            </div>
                         </form>
-
-                        <div style="margin-bottom: 1em;">
+                        <div style="margin-left: 1em;margin-bottom: 1em;">
                             <span> {{count($comments )}} Comentários </span>
                         </div>
 
+                        
                         @foreach ($comments as $comment)
-                            <div class="card" style="width: 70rem;">
-                                <div class="card-body" >
-                                    <p class="card-text"><pre>{{$comment->content}}</p>
+                            <div style="display: flex;flex-direction: column;" class="flex mx-auto items-center justify-center shadow-lg mt-56 mx-8 mb-4 max-w-lg">
+                                <div class="card" style="width: 70rem;">
+                                        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                                            <div style="margin-top:1em;">
+                                                <p style="font-weight:bold;">
+                                                    {{$comment->user->name}}
+                                                </p>    
+                                                <p style="color: #bfbfbf;margin-bottom:1em;"> 
+                                                    {{$comment->created_at}}
+                                                </p>
+                                            </div>
+                                        </div> 
+                                </div>
+                                
+                                <div class="card-body" style="width: 100%;margin-left: 4em;margin-bottom:1em;">
+                                    <p class="card-text">{{$comment->content}}</p>
                                 </div>
                             </div>
-                            <br>
                         @endforeach
 
 

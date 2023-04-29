@@ -15,4 +15,16 @@ class Comments extends Model
      */
     protected $primaryKey = 'id';
 
+    /**
+     * Carrega os usuários na lista de comentários.
+     */
+    public static function getCommentsWithUser($id) {
+        $aList = Comments::where('post_id', $id)->get();
+        foreach($aList as $comment) {
+            $comment->user = User::findOrFail($comment->user_id);
+        }
+
+        return $aList;
+    }
+
 }

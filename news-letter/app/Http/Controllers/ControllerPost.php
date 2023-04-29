@@ -35,7 +35,9 @@ class ControllerPost extends Controller
         $iLikes = Likes::getLikesFromPost($id);
         $iDislikes = Likes::getDislikesFromPost($id);
 
-        return view('post', ['post' => Posts::where('id', $id)->first(), 'comments' => Comments::where('post_id', $id)->get(), 'user' => $oRequest->user(), 'likes' => $iLikes, 'dislikes' => $iDislikes]);
+        $aComments = Comments::getCommentsWithUser($id);
+
+        return view('post', ['post' => Posts::where('id', $id)->first(), 'comments' => $aComments, 'user' => $oRequest->user(), 'likes' => $iLikes, 'dislikes' => $iDislikes]);
     }
 
     /**
