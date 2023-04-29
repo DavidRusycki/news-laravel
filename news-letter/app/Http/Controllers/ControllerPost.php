@@ -23,23 +23,28 @@ class ControllerPost extends Controller
         
         $oRequest->session()->flash('flash.banner', 'Yay it works!');
 
-        return view('posts', ['posts' => $aPosts, 'id' => $oRequest->user()->id]);
+        return view('posts', ['posts' => $aPosts, 'user' => $oRequest->user()]);
     }
 
     /**
      * Retorna a view de um post específico
      */
-    public function getPostFromId(Int $id) 
+    public function getPostFromId(Request $oRequest, Int $id) 
     {
-        return view('post', ['post' => Posts::where('id', $id)->first(), 'comments' => Comments::where('post_id', $id)->get()]);
+        return view('post', ['post' => Posts::where('id', $id)->first(), 'comments' => Comments::where('post_id', $id)->get(), 'user' => $oRequest->user()]);
     }
 
     /**
      * Método responsável retornar a View de inclusão de Post
      */
-    public function createPost() 
+    public function createPost(Request $oRequest) 
     {
-        return view('createPost');
+        if ($oRequest->user()->isAdmin()) {
+            return view('createPost');
+        }
+        else {
+            return $this->redirectHome();
+        }
     }
 
     /**
@@ -47,24 +52,29 @@ class ControllerPost extends Controller
      */
     protected function newPost(Request $oRequest)
     {
-        if ($this->validaDados($oRequest)) {
-            $this->trataDados($oRequest);
-            $oPost = new Posts;
-            $oPost->tittle = $oRequest->tittle;
-            $oPost->content = $oRequest->content;
-    
-            if (!$oRequest->hasFile('image')) {
-                $oPost->image = 'padrao';
-            } else 
-            if ($oRequest->hasFile('image') && $oRequest->file('image')->isValid()) {
-                $sImagePath = $this->addImagePath($oRequest->image);
-                $oPost->image = $sImagePath;
+        if ($oRequest->user()->isAdmin()) {
+            if ($this->validaDados($oRequest)) {
+                $this->trataDados($oRequest);
+                $oPost = new Posts;
+                $oPost->tittle = $oRequest->tittle;
+                $oPost->content = $oRequest->content;
+        
+                if (!$oRequest->hasFile('image')) {
+                    $oPost->image = 'padrao';
+                } else 
+                if ($oRequest->hasFile('image') && $oRequest->file('image')->isValid()) {
+                    $sImagePath = $this->addImagePath($oRequest->image);
+                    $oPost->image = $sImagePath;
+                }
+        
+                $oPost->save();
+                return  redirect('/posts');
             }
-    
-            $oPost->save();
-            return  redirect('/posts');
+            return  redirect('/post/new');
         }
-        return  redirect('/post/new');
+        else {
+            return $this->redirectHome();
+        }
     }
 
     /**
@@ -100,23 +110,58 @@ class ControllerPost extends Controller
     /**
      * Trata os dados para a inclusão ou alteração
      */
-    private function trataDados($oRequest) {
+    private function trataDados($oRequest) 
+    {
         return true;
     }
 
     /**
      * Método responsável por deletar o Post.
      */
-    protected function deletePost($id) {
-        Posts::findOrFail($id)->delete();
+    protected function deletePost($id) 
+    {
+        if ($oRequest->user()->isAdmin()) {
+            Posts::findOrFail($id)->delete();
+        }
 
-        return redirect('/posts');
+        return $this->redirectHome();
+    }
+
+    /**
+     * Fornece a tela para editar um post
+     */
+    protected function editPost(Request $oRequest, $id) 
+    {
+        if ($oRequest->user()->isAdmin()) {
+            $oPost = Posts::findOrFail($id);
+            return view('editPost', ['post' => $oPost]);
+        }
+        else {
+            return $this->redirectHome();
+        }
+    }
+
+    /**
+     * Método responsável por alterar o Post.
+     */
+    protected function updatePost(Request $oRequest) 
+    {
+        if ($oRequest->user()->isAdmin()) {
+            $oPost = $oRequest->all();
+            if ($oRequest->hasFile('image') && $oRequest->file('image')->isValid()) {
+                $sImagePath = $this->addImagePath($oPost['image']);
+                $oPost['image'] = $sImagePath;
+            } 
+            Posts::findOrFail($oRequest->id)->update($oPost);
+        }
+        return $this->redirectHome();
     }
 
     /**
      * Redireciona para a home.
      */
-    public function redirectHome() {
+    public function redirectHome() 
+    {
         return redirect('/posts');
     }
 

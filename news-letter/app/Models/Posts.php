@@ -9,6 +9,8 @@ class Posts extends Model
 {
     use HasFactory;
 
+    protected $guarded;
+   
     /**
      * Chave primária da tabela.
      * @var BigInt

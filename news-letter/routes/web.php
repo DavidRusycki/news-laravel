@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControllerPost;
+use App\Http\Controllers\ControllerLike;
+use App\Http\Controllers\ControllerComment;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,5 +37,15 @@ Route::middleware([
     Route::delete('/posts/{id}', [ControllerPost::class, 'deletePost']);    
 
     Route::get('/', [ControllerPost::class, 'redirectHome']);
+
+    Route::get('/post/edit/{id}', [ControllerPost::class, 'editPost']);
+
+    Route::put('/post/update/{id}', [ControllerPost::class, 'updatePost']);
+
+    Route::get('/like/{id}', [ControllerLike::class, 'newLike']);
+
+    Route::get('/dislike/{id}', [ControllerLike::class, 'newLike']);
+
+    Route::get('/comment/{id}', [ControllerComment::class, 'newComment']);
 
 });

@@ -58,4 +58,13 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    /**
+     * Retorna se o usuário é um administrador
+     * @return Boolean
+     */
+    public function isAdmin() {
+        return $this->admin == true;
+    }
+
 }

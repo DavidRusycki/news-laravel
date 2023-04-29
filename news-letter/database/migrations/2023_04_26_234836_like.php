@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('like', function (Blueprint $table) {
-            $table->string('id')->primary();
+        Schema::create('likes', function (Blueprint $table) {
+            $table->id();
             $table->bigInteger('post_id');
             $table->bigInteger('user_id');
             $table->integer('tipo');
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::drop('like');
+        Schema::drop('likes');
     }
 };
