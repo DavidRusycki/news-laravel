@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Posts;
 use App\Models\Comments;
 use App\Models\ExceptionPropria;
+use App\Models\Likes;
 
 class ControllerPost extends Controller
 {
@@ -31,7 +32,10 @@ class ControllerPost extends Controller
      */
     public function getPostFromId(Request $oRequest, Int $id) 
     {
-        return view('post', ['post' => Posts::where('id', $id)->first(), 'comments' => Comments::where('post_id', $id)->get(), 'user' => $oRequest->user()]);
+        $iLikes = Likes::getLikesFromPost($id);
+        $iDislikes = Likes::getDislikesFromPost($id);
+
+        return view('post', ['post' => Posts::where('id', $id)->first(), 'comments' => Comments::where('post_id', $id)->get(), 'user' => $oRequest->user(), 'likes' => $iLikes, 'dislikes' => $iDislikes]);
     }
 
     /**

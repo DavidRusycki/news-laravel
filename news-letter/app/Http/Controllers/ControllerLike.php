@@ -12,15 +12,26 @@ class ControllerLike extends Controller
      */
     protected function newLike(Request $oRequest) 
     {
-        $oAvaliacao = new Likes;
+        $aRegistros = Likes::where('post_id', $oRequest->id)->where('user_id', $oRequest->user()->id)->limit(1)->get();
+        $i = count($aRegistros);
+        $bInsere = true;
 
-        $oAvaliacao->post_id = $oRequest->id;
-        $oAvaliacao->user_id = $oRequest->user()->id;
-        $oAvaliacao->tipo = $oRequest->tipo;
+        if ($i > 0) {
+            $aRegistros[0]->delete();
+            $bInsere = $aRegistros[0]->tipo != $oRequest->tipo;
+        }
 
-        $oAvaliacao->save();
-        
-        return redirect('/');
+        if ($bInsere) {
+            $oAvaliacao = new Likes;
+
+            $oAvaliacao->post_id = $oRequest->id;
+            $oAvaliacao->user_id = $oRequest->user()->id;
+            $oAvaliacao->tipo = $oRequest->tipo;
+
+            $oAvaliacao->save();
+        }
+
+        return redirect('/posts/'.$oRequest->id);
     }   
 
 }
