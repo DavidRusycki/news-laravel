@@ -90,8 +90,8 @@
                         <br>
                         
                         <form class="w-full bg-white rounded-lg px-4 pt-2" action="/comment/{{$post->id}}" method="GET">
-                        @csrf
-                        @method('GET')
+                            @csrf
+                            @method('GET')
                             <div class="flex flex-wrap -mx-3 mb-6">
                                 <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg">Adicione um novo comentário</h2>
                                 <div class="w-full md:w-full px-3 mb-2 mt-2">
@@ -99,7 +99,8 @@
                                 </div>
                                 <div class="w-full md:w-full flex items-start md:w-full px-3">
                                     <div class="-mr-1">
-                                    <input style="margin-bottom: 1em;" value="Comentar" type='submit' class="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100">
+                                     <input style="margin-bottom: 1em;" value="Comentar" type='submit' class="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100">
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -107,9 +108,8 @@
                             <span> {{count($comments )}} Comentários </span>
                         </div>
 
-                        
                         @foreach ($comments as $comment)
-                            <div style="display: flex;flex-direction: column;" class="flex mx-auto items-center justify-center shadow-lg mt-56 mx-8 mb-4 max-w-lg">
+                            <div style="display: flex;align-content: stretch;justify-content: space-evenly;align-items: flex-start;flex-direction: column;" class="flex mx-auto items-center justify-center shadow-lg mx-8 mb-4">
                                 <div class="card" style="width: 70rem;">
                                         <div class="mx-auto max-w-7xl px-6 lg:px-8">
                                             <div style="margin-top:1em;">

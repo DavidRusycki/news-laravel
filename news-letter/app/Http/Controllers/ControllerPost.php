@@ -21,7 +21,7 @@ class ControllerPost extends Controller
         } else {
             $aPosts = Posts::all();
         }
-        
+
         $oRequest->session()->flash('flash.banner', 'Yay it works!');
 
         return view('posts', ['posts' => $aPosts, 'user' => $oRequest->user()]);
