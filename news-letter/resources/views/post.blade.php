@@ -1,3 +1,5 @@
+<title>NewsLetter</title>
+<link rel="icon" type="image/x-icon" href="/img/ico/ico.svg">
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -38,9 +40,9 @@
 
                         <div class="card" style="width: 70rem;">
                             <div class="card-body" >
-                                <h5 class="card-title">{{$post->tittle}}</h5>
                                 <img src="/img/post/{{ $post->image }}" class="img-fluid" alt="{{ $post->title }}">
-                                <p class="card-text"><pre>{{$post->content}}</pre></p>
+                                <h1 style="font-size: 3em" class="card-title">{{$post->tittle}}</h1>
+                                <p style="" class="mb-4 card-text">{{$post->content}}</p>
                                 <!-- somente para admins -->
                                 @if ($user->isAdmin())
                                     <div style="display: flex;flex-direction: row;align-items: center;">

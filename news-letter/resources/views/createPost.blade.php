@@ -1,8 +1,9 @@
-<title>New Post</title>
+<title>NewsLetter</title>
+<link rel="icon" type="image/x-icon" href="/img/ico/ico.svg">
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('New Post') }}
         </h2>
     </x-slot>
 

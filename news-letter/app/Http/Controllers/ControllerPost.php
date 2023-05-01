@@ -32,12 +32,17 @@ class ControllerPost extends Controller
      */
     public function getPostFromId(Request $oRequest, Int $id) 
     {
-        $iLikes = Likes::getLikesFromPost($id);
-        $iDislikes = Likes::getDislikesFromPost($id);
-
-        $aComments = Comments::getCommentsWithUser($id);
-
-        return view('post', ['post' => Posts::where('id', $id)->first(), 'comments' => $aComments, 'user' => $oRequest->user(), 'likes' => $iLikes, 'dislikes' => $iDislikes]);
+        if (Posts::findOrFail($id)) {
+            $iLikes = Likes::getLikesFromPost($id);
+            $iDislikes = Likes::getDislikesFromPost($id);
+            
+            $aComments = Comments::getCommentsWithUser($id);
+            
+            return view('post', ['post' => Posts::where('id', $id)->first(), 'comments' => $aComments, 'user' => $oRequest->user(), 'likes' => $iLikes, 'dislikes' => $iDislikes]);
+        }
+        else {
+            return $this->redirectHome();
+        }
     }
 
     /**
@@ -124,7 +129,7 @@ class ControllerPost extends Controller
     /**
      * Método responsável por deletar o Post.
      */
-    protected function deletePost($id) 
+    protected function deletePost(Request $oRequest, $id) 
     {
         if ($oRequest->user()->isAdmin()) {
             Posts::findOrFail($id)->delete();
